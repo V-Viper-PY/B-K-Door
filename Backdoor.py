@@ -123,6 +123,12 @@ def execute():
     except Exception as e:
         return jsonify({"error": str(e)})
 
+@app.route('/dashboard')
+@auth.login_required
+def dashboard():
+    return render_template_string(DASHBOARD_HTML)
+
+
 # File Manager
 @app.route('/upload', methods=['POST'])
 @auth.login_required
