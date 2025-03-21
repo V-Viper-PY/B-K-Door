@@ -4,7 +4,6 @@ import subprocess
 from flask import Flask, render_template_string, request, redirect, url_for, session
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
-import ssl
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
@@ -13,8 +12,7 @@ Session(app)
 
 # Configuration
 PASSWORD_HASH = generate_password_hash("your_secure_password")  # Change this!
-SSL_CERT = 'server.pem'  # Self-signed certificate (create this first)
-PORT = 443  # Use HTTPS port
+PORT = 5000  # Standard HTTP port
 
 HTML_LOGIN = """
 <!DOCTYPE html>
@@ -75,11 +73,5 @@ def control():
     return render_template_string(HTML_CONTROL, output=output)
 
 if __name__ == '__main__':
-    # Create self-signed certificate (run this once)
-    if not os.path.exists(SSL_CERT):
-        os.system(f"openssl req -x509 -newkey rsa:4096 -keyout {SSL_CERT} -out {SSL_CERT} -days 365 -nodes -subj '/CN=localhost'")
-    
-    # Run in background with HTTPS
-    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    context.load_cert_chain(SSL_CERT)
-    app.run(host='0.0.0.0', port=PORT, ssl_context=context, threaded=True)
+    # Run in background without SSL
+    app.run(host='0.0.0.0', port=PORT, threaded=True)
